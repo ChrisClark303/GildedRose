@@ -21,7 +21,7 @@ namespace GildedRoseTests
             Console.SetOut(new StringWriter(fakeoutput));
             Console.SetIn(new StringReader("a\n"));
 
-            Program.Main(new string[] { "30" });
+            Program.Main(new string[] { "30" }); //args don't do anything!
             var output = fakeoutput.ToString();
 
             return Verifier.Verify(output);
