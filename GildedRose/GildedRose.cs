@@ -62,12 +62,9 @@ namespace GildedRoseKata
                     {
                         if (item.Name != "Backstage passes to a TAFKAL80ETC concert") //magic string
                         {
-                            if (item.Quality > 0) //combine ifs
+                            if (item.Quality > 0 && item.Name != "Sulfuras, Hand of Ragnaros")
                             {
-                                if (item.Name != "Sulfuras, Hand of Ragnaros") //magic string
-                                {
-                                    item.Quality--;
-                                }
+                                item.Quality--;
                             }
                         }
                         else
