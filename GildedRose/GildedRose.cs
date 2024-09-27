@@ -17,12 +17,9 @@ namespace GildedRoseKata
                 //nested ifs! Magic strings! 
                 if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
                 {
-                    if (item.Quality > 0)
+                    if (item.Quality > 0 && item.Name != "Sulfuras, Hand of Ragnaros")
                     {
-                        if (item.Name != "Sulfuras, Hand of Ragnaros") //can probably combine this with the above IF?
-                        {
-                            item.Quality--;
-                        }
+                        item.Quality--;
                     }
                 }
                 else
