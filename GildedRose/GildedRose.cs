@@ -73,7 +73,7 @@ namespace GildedRoseKata
                         }
                         else
                         {
-                            Items[i].Quality = Items[i].Quality - Items[i].Quality; //instead this just 0?!
+                            Items[i].Quality = 0;
                         }
                     }
                     else
