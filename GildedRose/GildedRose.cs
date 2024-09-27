@@ -81,7 +81,7 @@ namespace GildedRoseKata
             }
         }
 
-        private void IncrementQualityIfNotAtMax(Item item)
+        private static void IncrementQualityIfNotAtMax(Item item)
         {
             if (item.Quality < MaxQuality)
             {
