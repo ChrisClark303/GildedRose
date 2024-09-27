@@ -57,29 +57,34 @@ namespace GildedRoseKata
                     item.SellIn--;
                 }
 
-                if (item.SellIn < 0) //HandlePastSellBy()? - could return early instead of all these nested ifs! 
+                if (item.SellIn < 0)
                 {
-                    if (item.Name != ItemNames.AgedBrie)
+                    HandleItemPastSellByDate(item);
+                }
+            }
+        }
+
+        private void HandleItemPastSellByDate(Item item)
+        {
+            if (item.Name != ItemNames.AgedBrie)
+            {
+                if (item.Name != ItemNames.BackstagePass)
+                {
+                    if (item.Quality > MinQuality && item.Name != ItemNames.Sulfuras)
                     {
-                        if (item.Name != ItemNames.BackstagePass)
-                        {
-                            if (item.Quality > MinQuality && item.Name != ItemNames.Sulfuras)
-                            {
-                                item.Quality--;
-                            }
-                        }
-                        else
-                        {
-                            item.Quality = MinQuality;
-                        }
+                        item.Quality--;
                     }
-                    else
-                    {
-                        if (item.Quality < MaxQuality)
-                        {
-                            item.Quality++;
-                        }
-                    }
+                }
+                else
+                {
+                    item.Quality = MinQuality;
+                }
+            }
+            else
+            {
+                if (item.Quality < MaxQuality)
+                {
+                    item.Quality++;
                 }
             }
         }
