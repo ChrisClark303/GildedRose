@@ -17,10 +17,10 @@ namespace GildedRoseKata
         {
             foreach (Item item in Items)
             {
-                //nested ifs! Magic strings! 
-                if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
+                //nested ifs!
+                if (item.Name != ItemNames.AgedBrie && item.Name != ItemNames.BackstagePass)
                 {
-                    if (item.Quality > MinQuality && item.Name != "Sulfuras, Hand of Ragnaros")
+                    if (item.Quality > MinQuality && item.Name != ItemNames.Sulfuras)
                     {
                         item.Quality--;
                     }
@@ -31,7 +31,7 @@ namespace GildedRoseKata
                     {
                         item.Quality++;
 
-                        if (item.Name == "Backstage passes to a TAFKAL80ETC concert") //magic string
+                        if (item.Name == ItemNames.BackstagePass)
                         {
                             if (item.SellIn < 11) //magic number
                             {
@@ -52,18 +52,18 @@ namespace GildedRoseKata
                     }
                 }
 
-                if (item.Name != "Sulfuras, Hand of Ragnaros")
+                if (item.Name != ItemNames.Sulfuras)
                 {
                     item.SellIn--;
                 }
 
                 if (item.SellIn < 0) //HandlePastSellBy()? - could return early instead of all these nested ifs! 
                 {
-                    if (item.Name != "Aged Brie") //magic string
+                    if (item.Name != ItemNames.AgedBrie)
                     {
-                        if (item.Name != "Backstage passes to a TAFKAL80ETC concert") //magic string
+                        if (item.Name != ItemNames.BackstagePass)
                         {
-                            if (item.Quality > MinQuality && item.Name != "Sulfuras, Hand of Ragnaros")
+                            if (item.Quality > MinQuality && item.Name != ItemNames.Sulfuras)
                             {
                                 item.Quality--;
                             }
