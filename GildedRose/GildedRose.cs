@@ -4,7 +4,7 @@ namespace GildedRoseKata
 {
     public class GildedRose
     {
-        IList<Item> Items; //no accessor, name not correct.
+        IList<Item> Items; //no accessor, name not correct for a field.
         public GildedRose(IList<Item> Items)
         {
             this.Items = Items;
@@ -21,7 +21,7 @@ namespace GildedRoseKata
                     {
                         if (Items[i].Name != "Sulfuras, Hand of Ragnaros") //can probably combine this with the above IF?
                         {
-                            Items[i].Quality = Items[i].Quality - 1; //double access of .Quality
+                            Items[i].Quality--;
                         }
                     }
                 }
@@ -29,7 +29,7 @@ namespace GildedRoseKata
                 {
                     if (Items[i].Quality < 50) //magic number
                     {
-                        Items[i].Quality = Items[i].Quality + 1; //double access
+                        Items[i].Quality++;
 
                         if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert") //magic string
                         {
@@ -37,7 +37,7 @@ namespace GildedRoseKata
                             {
                                 if (Items[i].Quality < 50) //magic number
                                 {
-                                    Items[i].Quality = Items[i].Quality + 1; //double access
+                                    Items[i].Quality++;
                                 }
                             }
 
@@ -45,7 +45,7 @@ namespace GildedRoseKata
                             {
                                 if (Items[i].Quality < 50) //magic number
                                 {
-                                    Items[i].Quality = Items[i].Quality + 1; //double access
+                                    Items[i].Quality++;
                                 }
                             }
                         }
@@ -54,7 +54,7 @@ namespace GildedRoseKata
 
                 if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
                 {
-                    Items[i].SellIn = Items[i].SellIn - 1; //double access of .SellIn
+                    Items[i].SellIn--;
                 }
 
                 if (Items[i].SellIn < 0) //HandlePastSellBy()? - could return early instead of all these nested ifs! 
@@ -67,7 +67,7 @@ namespace GildedRoseKata
                             {
                                 if (Items[i].Name != "Sulfuras, Hand of Ragnaros") //magic string
                                 {
-                                    Items[i].Quality = Items[i].Quality - 1;
+                                    Items[i].Quality--;
                                 }
                             }
                         }
@@ -80,7 +80,7 @@ namespace GildedRoseKata
                     {
                         if (Items[i].Quality < 50) //magic number
                         {
-                            Items[i].Quality = Items[i].Quality + 1; //double access
+                            Items[i].Quality++;
                         }
                     }
                 }
