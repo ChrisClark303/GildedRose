@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GildedRoseKata
 {
@@ -7,6 +8,9 @@ namespace GildedRoseKata
     {
         public static void Main(string[] args)
         {
+            string numOfDaysArg = args.FirstOrDefault();
+            int numOfDays = int.Parse(numOfDaysArg ?? "0");
+
             Console.WriteLine("OMGHAI!");
 
             IList<Item> Items = new List<Item>{
@@ -39,7 +43,7 @@ namespace GildedRoseKata
 
             var app = new GildedRose(Items);
 
-            for (var i = 0; i < 31; i++)
+            for (var i = 0; i <= numOfDays; i++)
             {
                 Console.WriteLine("-------- day " + i + " --------");
                 Console.WriteLine("name, sellIn, quality");
@@ -48,7 +52,7 @@ namespace GildedRoseKata
                     System.Console.WriteLine(Items[j].Name + ", " + Items[j].SellIn + ", " + Items[j].Quality);
                 }
                 Console.WriteLine("");
-                app.UpdateQuality();
+                app.UpdateQuality(); //on the last run of this loop, this update is pointless
             }
         }
     }
