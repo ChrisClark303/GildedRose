@@ -4,9 +4,6 @@ namespace GildedRoseKata
 {
     public class GildedRose
     {
-        private const int MaxQuality = 50;
-        private const int MinQuality = 0;
-
         IList<Item> Items; //no accessor, name not correct for a field.
         public GildedRose(IList<Item> Items)
         {
@@ -22,24 +19,24 @@ namespace GildedRoseKata
                 //nested ifs!
                 if (item.Name != ItemNames.AgedBrie && item.Name != ItemNames.BackstagePass)
                 {
-                    DecrementQualityIfNotAtMin(item);
+                    item.DecrementQualityIfNotAtMin();
                 }
                 else
                 {
-                    if (item.Quality < MaxQuality)
+                    if (item.IsLessThanMaxQuality())
                     {
-                        IncrementQualityIfNotAtMax(item);
+                        item.IncrementQualityIfNotAtMax();
 
                         if (item.Name == ItemNames.BackstagePass)
                         {
                             if (item.SellIn < 11) //magic number
                             {
-                                IncrementQualityIfNotAtMax(item);
+                                item.IncrementQualityIfNotAtMax();
                             }
 
                             if (item.SellIn < 6) //magic number
                             {
-                                IncrementQualityIfNotAtMax(item);
+                                item.IncrementQualityIfNotAtMax();
                             }
                         }
                     }
@@ -58,33 +55,17 @@ namespace GildedRoseKata
         {
             if (item.Name == ItemNames.AgedBrie)
             {
-                IncrementQualityIfNotAtMax(item);
+                item.IncrementQualityIfNotAtMax();
                 return;
             }
 
             if (item.Name == ItemNames.BackstagePass)
             {
-                item.Quality = MinQuality;
+                item.SetQualityToMinimum();
                 return;
             }
 
-            DecrementQualityIfNotAtMin(item);
-        }
-
-        private static void DecrementQualityIfNotAtMin(Item item)
-        {
-            if (item.Quality > MinQuality)
-            {
-                item.Quality--;
-            }
-        }
-
-        private static void IncrementQualityIfNotAtMax(Item item)
-        {
-            if (item.Quality < MaxQuality)
-            {
-                item.Quality++;
-            }
+            item.DecrementQualityIfNotAtMin();
         }
     }
 }
