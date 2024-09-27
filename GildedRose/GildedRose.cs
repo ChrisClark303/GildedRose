@@ -22,33 +22,24 @@ namespace GildedRoseKata
                 //nested ifs!
                 if (item.Name != ItemNames.AgedBrie && item.Name != ItemNames.BackstagePass)
                 {
-                    if (item.Quality > MinQuality)
-                    {
-                        item.Quality--;
-                    }
+                    DecrementQualityIfNotAtMin(item);
                 }
                 else
                 {
                     if (item.Quality < MaxQuality)
                     {
-                        item.Quality++;
+                        IncrementQualityIfNotAtMax(item);
 
                         if (item.Name == ItemNames.BackstagePass)
                         {
                             if (item.SellIn < 11) //magic number
                             {
-                                if (item.Quality < MaxQuality)
-                                {
-                                    item.Quality++;
-                                }
+                                IncrementQualityIfNotAtMax(item);
                             }
 
                             if (item.SellIn < 6) //magic number
                             {
-                                if (item.Quality < MaxQuality)
-                                {
-                                    item.Quality++;
-                                }
+                                IncrementQualityIfNotAtMax(item);
                             }
                         }
                     }
@@ -69,11 +60,7 @@ namespace GildedRoseKata
 
             if (item.Name == ItemNames.AgedBrie)
             {
-                if (item.Quality < MaxQuality)
-                {
-                    item.Quality++;
-                }
-
+                IncrementQualityIfNotAtMax(item);
                 return;
             }
 
@@ -83,9 +70,22 @@ namespace GildedRoseKata
                 return;
             }
 
+            DecrementQualityIfNotAtMin(item);
+        }
+
+        private static void DecrementQualityIfNotAtMin(Item item)
+        {
             if (item.Quality > MinQuality)
             {
                 item.Quality--;
+            }
+        }
+
+        private void IncrementQualityIfNotAtMax(Item item)
+        {
+            if (item.Quality < MaxQuality)
+            {
+                item.Quality++;
             }
         }
     }
