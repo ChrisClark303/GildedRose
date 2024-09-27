@@ -17,10 +17,12 @@ namespace GildedRoseKata
         {
             foreach (Item item in Items)
             {
+                if (item.Name == ItemNames.Sulfuras) continue;
+
                 //nested ifs!
                 if (item.Name != ItemNames.AgedBrie && item.Name != ItemNames.BackstagePass)
                 {
-                    if (item.Quality > MinQuality && item.Name != ItemNames.Sulfuras)
+                    if (item.Quality > MinQuality)
                     {
                         item.Quality--;
                     }
@@ -52,10 +54,7 @@ namespace GildedRoseKata
                     }
                 }
 
-                if (item.Name != ItemNames.Sulfuras)
-                {
-                    item.SellIn--;
-                }
+                item.SellIn--;
 
                 if (item.SellIn < 0)
                 {
