@@ -5,6 +5,7 @@ namespace GildedRoseKata
     public class GildedRose
     {
         private const int MaxQuality = 50;
+        private const int MinQuality = 0;
 
         IList<Item> Items; //no accessor, name not correct for a field.
         public GildedRose(IList<Item> Items)
@@ -19,7 +20,7 @@ namespace GildedRoseKata
                 //nested ifs! Magic strings! 
                 if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
                 {
-                    if (item.Quality > 0 && item.Name != "Sulfuras, Hand of Ragnaros")
+                    if (item.Quality > MinQuality && item.Name != "Sulfuras, Hand of Ragnaros")
                     {
                         item.Quality--;
                     }
@@ -62,14 +63,14 @@ namespace GildedRoseKata
                     {
                         if (item.Name != "Backstage passes to a TAFKAL80ETC concert") //magic string
                         {
-                            if (item.Quality > 0 && item.Name != "Sulfuras, Hand of Ragnaros")
+                            if (item.Quality > MinQuality && item.Name != "Sulfuras, Hand of Ragnaros")
                             {
                                 item.Quality--;
                             }
                         }
                         else
                         {
-                            item.Quality = 0;
+                            item.Quality = MinQuality;
                         }
                     }
                     else
