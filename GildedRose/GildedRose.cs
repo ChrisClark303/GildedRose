@@ -56,8 +56,6 @@ namespace GildedRoseKata
 
         private void HandleItemPastSellByDate(Item item)
         {
-            if (item.Name == ItemNames.Sulfuras) return;
-
             if (item.Name == ItemNames.AgedBrie)
             {
                 IncrementQualityIfNotAtMax(item);
