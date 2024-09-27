@@ -4,6 +4,8 @@ namespace GildedRoseKata
 {
     public class GildedRose
     {
+        private const int MaxQuality = 50;
+
         IList<Item> Items; //no accessor, name not correct for a field.
         public GildedRose(IList<Item> Items)
         {
@@ -12,7 +14,7 @@ namespace GildedRoseKata
 
         public void UpdateQuality()
         {
-            foreach (Item item in Items) //for instead of foreach! 
+            foreach (Item item in Items)
             {
                 //nested ifs! Magic strings! 
                 if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
@@ -24,7 +26,7 @@ namespace GildedRoseKata
                 }
                 else
                 {
-                    if (item.Quality < 50) //magic number
+                    if (item.Quality < MaxQuality)
                     {
                         item.Quality++;
 
@@ -32,7 +34,7 @@ namespace GildedRoseKata
                         {
                             if (item.SellIn < 11) //magic number
                             {
-                                if (item.Quality < 50) //magic number
+                                if (item.Quality < MaxQuality)
                                 {
                                     item.Quality++;
                                 }
@@ -40,7 +42,7 @@ namespace GildedRoseKata
 
                             if (item.SellIn < 6) //magic number
                             {
-                                if (item.Quality < 50) //magic number
+                                if (item.Quality < MaxQuality)
                                 {
                                     item.Quality++;
                                 }
@@ -75,7 +77,7 @@ namespace GildedRoseKata
                     }
                     else
                     {
-                        if (item.Quality < 50) //magic number
+                        if (item.Quality < MaxQuality)
                         {
                             item.Quality++;
                         }
