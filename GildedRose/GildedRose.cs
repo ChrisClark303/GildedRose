@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace GildedRoseKata
 {
@@ -16,31 +17,7 @@ namespace GildedRoseKata
             {
                 if (item.Name == ItemNames.Sulfuras) continue;
 
-                //nested ifs!
-                if (item.Name != ItemNames.AgedBrie && item.Name != ItemNames.BackstagePass)
-                {
-                    item.DecrementQualityIfNotAtMin();
-                }
-                else
-                {
-                    if (item.IsLessThanMaxQuality())
-                    {
-                        item.IncrementQualityIfNotAtMax();
-
-                        if (item.Name == ItemNames.BackstagePass)
-                        {
-                            if (item.SellIn < 11) //magic number
-                            {
-                                item.IncrementQualityIfNotAtMax();
-                            }
-
-                            if (item.SellIn < 6) //magic number
-                            {
-                                item.IncrementQualityIfNotAtMax();
-                            }
-                        }
-                    }
-                }
+                UpdateItemQuality(item);
 
                 item.SellIn--;
 
@@ -49,6 +26,34 @@ namespace GildedRoseKata
                     HandleItemPastSellByDate(item);
                 }
             }
+        }
+
+        private static void UpdateItemQuality(Item item)
+        {
+            if (item.Name == ItemNames.AgedBrie || item.Name == ItemNames.BackstagePass)
+            {
+                if (item.IsLessThanMaxQuality())
+                {
+                    item.IncrementQualityIfNotAtMax();
+
+                    if (item.Name == ItemNames.BackstagePass)
+                    {
+                        if (item.SellIn < 11) //magic number
+                        {
+                            item.IncrementQualityIfNotAtMax();
+                        }
+
+                        if (item.SellIn < 6) //magic number
+                        {
+                            item.IncrementQualityIfNotAtMax();
+                        }
+                    }
+                }
+
+                return;
+            }
+
+            item.DecrementQualityIfNotAtMin();
         }
 
         private void HandleItemPastSellByDate(Item item)
