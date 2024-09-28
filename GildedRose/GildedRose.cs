@@ -56,7 +56,7 @@ namespace GildedRoseKata
             item.DecrementQualityIfNotAtMin();
         }
 
-        private void HandleItemPastSellByDate(Item item)
+        private static void HandleItemPastSellByDate(Item item)
         {
             if (item.Name == ItemNames.AgedBrie)
             {
