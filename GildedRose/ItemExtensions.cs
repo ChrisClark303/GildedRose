@@ -40,5 +40,10 @@
         {
             return item.Name != ItemNames.Sulfuras;
         }
+
+        public static bool ExpiresAfterSellIn(this Item item)
+        {
+            return item.Name == ItemNames.BackstagePass;
+        }
     }
 }

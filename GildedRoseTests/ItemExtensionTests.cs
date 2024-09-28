@@ -103,5 +103,20 @@ namespace GildedRoseTests
 
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData("Aged Brie", false)]
+        [InlineData("Backstage passes to a TAFKAL80ETC concert", true)]
+        [InlineData("+5 Dexterity Vest", false)]
+        [InlineData("ItemX", false)]
+        [InlineData("Sulfuras, Hand of Ragnaros", false)]
+        public void ItemExpiresAfterSellIn_ReturnsCorrectBoolean_BasedOnItemName(string itemName, bool expected)
+        {
+            Item item = new() { Name = itemName };
+
+            bool actual = item.ExpiresAfterSellIn();
+
+            Assert.Equal(expected, actual);
+        }
     }
 }

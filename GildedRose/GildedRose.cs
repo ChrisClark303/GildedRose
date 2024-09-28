@@ -64,7 +64,7 @@ namespace GildedRoseKata
                 return;
             }
 
-            if (item.Name == ItemNames.BackstagePass)
+            if (item.ExpiresAfterSellIn())
             {
                 item.SetQualityToMinimum();
                 return;
