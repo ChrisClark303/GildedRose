@@ -15,7 +15,7 @@ namespace GildedRoseKata
         {
             foreach (Item item in Items)
             {
-                if (item.Name == ItemNames.Sulfuras) continue;
+                if (!item.RequiresQualityUpdates()) continue;
 
                 UpdateItemQuality(item);
 

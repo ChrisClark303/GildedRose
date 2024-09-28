@@ -35,5 +35,10 @@
         {
             return (item.Name == ItemNames.AgedBrie || item.Name == ItemNames.BackstagePass);
         }
+
+        public static bool RequiresQualityUpdates(this Item item)
+        {
+            return item.Name != ItemNames.Sulfuras;
+        }
     }
 }
