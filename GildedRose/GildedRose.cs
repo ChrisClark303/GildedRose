@@ -30,7 +30,7 @@ namespace GildedRoseKata
 
         private static void UpdateItemQuality(Item item)
         {
-            if (item.Name == ItemNames.AgedBrie || item.Name == ItemNames.BackstagePass)
+            if (item.QualityIncreasesWithAge())
             {
                 if (item.IsLessThanMaxQuality())
                 {

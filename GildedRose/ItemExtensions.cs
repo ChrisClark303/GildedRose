@@ -30,5 +30,10 @@
         {
             return item.Quality < MaxQuality;
         }
+
+        public static bool QualityIncreasesWithAge(this Item item)
+        {
+            return (item.Name == ItemNames.AgedBrie || item.Name == ItemNames.BackstagePass);
+        }
     }
 }
