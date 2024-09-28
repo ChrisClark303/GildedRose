@@ -14,54 +14,59 @@ namespace GildedRoseKata
         {
             foreach (Item item in Items)
             {
-                if (item.Name == ItemNames.Sulfuras) continue;
+                if (!item.RequiresQualityUpdates()) continue;
 
-                //nested ifs!
-                if (item.Name != ItemNames.AgedBrie && item.Name != ItemNames.BackstagePass)
-                {
-                    item.DecrementQualityIfNotAtMin();
-                }
-                else
-                {
-                    if (item.IsLessThanMaxQuality())
-                    {
-                        item.IncrementQualityIfNotAtMax();
-
-                        if (item.Name == ItemNames.BackstagePass)
-                        {
-                            if (item.SellIn < 11) //magic number
-                            {
-                                item.IncrementQualityIfNotAtMax();
-                            }
-
-                            if (item.SellIn < 6) //magic number
-                            {
-                                item.IncrementQualityIfNotAtMax();
-                            }
-                        }
-                    }
-                }
+                UpdateItemQuality(item);
 
                 item.SellIn--;
 
                 if (item.SellIn < 0)
                 {
-                    HandleItemPastSellByDate(item);
+                    HandleItemPastSellIn(item);
                 }
             }
         }
 
-        private void HandleItemPastSellByDate(Item item)
+        private static void UpdateItemQuality(Item item)
         {
-            if (item.Name == ItemNames.AgedBrie)
+            if (item.QualityIncreasesWithAge())
             {
-                item.IncrementQualityIfNotAtMax();
+                HandleItemsThatIncreaseQualityWithAge(item);
                 return;
             }
 
-            if (item.Name == ItemNames.BackstagePass)
+            item.DecrementQualityIfNotAtMin();
+        }
+
+        private static void HandleItemsThatIncreaseQualityWithAge(Item item)
+        {
+            item.IncrementQualityIfNotAtMax();
+
+            if (item.HasSellInDependentQualityUpdates())
+            {
+                if (item.SellIn < 11) //magic number
+                {
+                    item.IncrementQualityIfNotAtMax();
+                }
+
+                if (item.SellIn < 6) //magic number
+                {
+                    item.IncrementQualityIfNotAtMax();
+                }
+            }
+        }
+
+        private static void HandleItemPastSellIn(Item item)
+        {
+            if (item.ExpiresAfterSellIn())
             {
                 item.SetQualityToMinimum();
+                return;
+            }
+
+            if (item.QualityIncreasesWithAge())
+            {
+                item.IncrementQualityIfNotAtMax();
                 return;
             }
 
