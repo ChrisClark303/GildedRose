@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace GildedRoseKata
 {
@@ -32,28 +31,29 @@ namespace GildedRoseKata
         {
             if (item.QualityIncreasesWithAge())
             {
-                if (item.IsLessThanMaxQuality())
-                {
-                    item.IncrementQualityIfNotAtMax();
-
-                    if (item.HasSellInDependentQualityUpdates())
-                    {
-                        if (item.SellIn < 11) //magic number
-                        {
-                            item.IncrementQualityIfNotAtMax();
-                        }
-
-                        if (item.SellIn < 6) //magic number
-                        {
-                            item.IncrementQualityIfNotAtMax();
-                        }
-                    }
-                }
-
+                HandleItemsThatIncreaseQualityWithAge(item);
                 return;
             }
 
             item.DecrementQualityIfNotAtMin();
+        }
+
+        private static void HandleItemsThatIncreaseQualityWithAge(Item item)
+        {
+            item.IncrementQualityIfNotAtMax();
+
+            if (item.HasSellInDependentQualityUpdates())
+            {
+                if (item.SellIn < 11) //magic number
+                {
+                    item.IncrementQualityIfNotAtMax();
+                }
+
+                if (item.SellIn < 6) //magic number
+                {
+                    item.IncrementQualityIfNotAtMax();
+                }
+            }
         }
 
         private static void HandleItemPastSellIn(Item item)
