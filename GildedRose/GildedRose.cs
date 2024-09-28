@@ -58,15 +58,15 @@ namespace GildedRoseKata
 
         private static void HandleItemPastSellByDate(Item item)
         {
-            if (item.Name == ItemNames.AgedBrie)
-            {
-                item.IncrementQualityIfNotAtMax();
-                return;
-            }
-
             if (item.ExpiresAfterSellIn())
             {
                 item.SetQualityToMinimum();
+                return;
+            }
+
+            if (item.QualityIncreasesWithAge())
+            {
+                item.IncrementQualityIfNotAtMax();
                 return;
             }
 
