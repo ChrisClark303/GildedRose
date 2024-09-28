@@ -23,7 +23,7 @@ namespace GildedRoseKata
 
                 if (item.SellIn < 0)
                 {
-                    HandleItemPastSellByDate(item);
+                    HandleItemPastSellIn(item);
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace GildedRoseKata
             item.DecrementQualityIfNotAtMin();
         }
 
-        private static void HandleItemPastSellByDate(Item item)
+        private static void HandleItemPastSellIn(Item item)
         {
             if (item.ExpiresAfterSellIn())
             {
