@@ -36,7 +36,7 @@ namespace GildedRoseKata
                 {
                     item.IncrementQualityIfNotAtMax();
 
-                    if (item.Name == ItemNames.BackstagePass)
+                    if (item.HasSellInDependentQualityUpdates())
                     {
                         if (item.SellIn < 11) //magic number
                         {

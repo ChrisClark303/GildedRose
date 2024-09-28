@@ -45,5 +45,10 @@
         {
             return item.Name == ItemNames.BackstagePass;
         }
+
+        public static bool HasSellInDependentQualityUpdates(this Item item)
+        {
+            return item.Name == ItemNames.BackstagePass;
+        }
     }
 }
