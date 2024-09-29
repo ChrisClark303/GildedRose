@@ -47,9 +47,9 @@ namespace GildedRoseKata
             {
                 Console.WriteLine("-------- day " + i + " --------");
                 Console.WriteLine("name, sellIn, quality");
-                for (var j = 0; j < Items.Count; j++)
+                foreach (Item item in Items)
                 {
-                    System.Console.WriteLine(Items[j].Name + ", " + Items[j].SellIn + ", " + Items[j].Quality);
+                    System.Console.WriteLine(item.Name + ", " + item.SellIn + ", " + item.Quality);
                 }
                 Console.WriteLine("");
                 app.UpdateQuality(); //on the last run of this loop, this update is pointless
