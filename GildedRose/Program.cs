@@ -50,7 +50,9 @@ namespace GildedRoseKata
             return new Dictionary<string, IItemProcessingRules>
             {
                 {ItemNames.Sulfuras, new NoUpdateRule()},
-                {ItemNames.ConjuredManaCake, new ItemProcessingRule(-2) }
+                {ItemNames.ConjuredManaCake, new ItemProcessingRule(-2) },
+                {ItemNames.AgedBrie, new ItemProcessingRule(1) },
+                {ItemNames.BackstagePass, new ItemProcessingRule(1) }
             };
         }
 

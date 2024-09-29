@@ -35,10 +35,10 @@ namespace GildedRoseKata
         {
             if (item.QualityIncreasesWithAge())
             {
-                item.IncrementQualityIfNotAtMax();
+                item.AmendQualityByAmount(rules.DailyQualityAdjustment);
                 item.ApplySellInDependentQualityUpdate();
                 return;
-            } 
+            }
 
             item.AmendQualityByAmount(rules.DailyQualityAdjustment);
         }

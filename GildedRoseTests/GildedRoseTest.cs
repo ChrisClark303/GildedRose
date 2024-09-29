@@ -56,81 +56,92 @@ namespace GildedRoseTests
         [Fact]
         public void UpdateQuality_ItemDoesNotRequireUpdate_QualityShouldNotChangeOverTime()
         {
-            IList<Item> Items = [new Item { Name = "Sulfuras", SellIn = 0, Quality = 80 }];
+            IList<Item> items = [new Item { Name = "Sulfuras", SellIn = 0, Quality = 80 }];
 
             var rules = new Dictionary<string, IItemProcessingRules>
             {
                 {"Sulfuras", new NoUpdateRule()}
             };
   
-            GildedRose app = new(Items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
             app.UpdateQuality();
-            Assert.Equal(80, Items[0].Quality);
+            Assert.Equal(80, items[0].Quality);
         }
 
         [Fact]
-        public void ItemIsAgedBrie_Quality_ShouldIncreaseOverTime()
+        public void UpdateQuality_ItemHasRuleForPositiveDailyQualityAdjustment_QualityShouldIncreaseOverTime()
         {
-            IList<Item> Items = [new Item { Name = "Aged Brie", SellIn = 10, Quality = 10 }];
-            GildedRose app = new(Items);
+            IList<Item> items = [new Item { Name = "Aged Brie", SellIn = 10, Quality = 10 }];
+
+            var rules = new Dictionary<string, IItemProcessingRules>
+            {
+                {"Aged Brie", new ItemProcessingRule(1)}
+            };
+
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
             app.UpdateQuality();
-            Assert.Equal(11, Items[0].Quality);
+            Assert.Equal(11, items[0].Quality);
         }
 
         [Fact]
-        public void ItemIsBackstagePass_Quality_ShouldIncreaseOverTime()
+        public void UpdateQuality_ItemHasRuleForPositiveDailyQualityAdjustment_QualityShouldNotIncreaseOverFifty()
         {
-            IList<Item> Items = [new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 11, Quality = 10 }];
-            GildedRose app = new(Items);
+            IList<Item> items = [new Item { Name = "Aged Brie", SellIn = 10, Quality = 50 }];
+            var rules = new Dictionary<string, IItemProcessingRules>
+            {
+                {"Aged Brie", new ItemProcessingRule(1)}
+            };
+
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
             app.UpdateQuality();
-            Assert.Equal(11, Items[0].Quality);
+            Assert.Equal(50, items[0].Quality);
         }
 
         [Fact]
         public void ItemIsBackstagePass_Quality_ShouldIncreaseByTwoSixToTenDaysFromConcert()
         {
-            IList<Item> Items = [
+            IList<Item> items = [
                 new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 10 },
                 new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 6, Quality = 10 }];
-            GildedRose app = new(Items);
+            var rules = new Dictionary<string, IItemProcessingRules>
+            {
+                {"Backstage passes to a TAFKAL80ETC concert", new ItemProcessingRule(1)}
+            };
+
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
             app.UpdateQuality();
-            Assert.Equal(12, Items[0].Quality);
-            Assert.Equal(12, Items[1].Quality);
+
+            Assert.Equal(12, items[0].Quality);
+            Assert.Equal(12, items[1].Quality);
         }
 
         [Fact]
         public void ItemIsBackstagePass_Quality_ShouldIncreaseByThreeFiveDaysFromConcert()
         {
-            IList<Item> Items = [
+            IList<Item> items = [
                 new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 10 },
                 new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 2, Quality = 10 }];
-            GildedRose app = new(Items);
+            var rules = new Dictionary<string, IItemProcessingRules>
+            {
+                {"Backstage passes to a TAFKAL80ETC concert", new ItemProcessingRule(1)}
+            };
+
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
             app.UpdateQuality();
-            Assert.Equal(13, Items[0].Quality);
-            Assert.Equal(13, Items[1].Quality);
+            Assert.Equal(13, items[0].Quality);
+            Assert.Equal(13, items[1].Quality);
         }
 
         [Fact]
         public void ItemIsBackstagePass_Quality_ShouldReduceToZeroAfterConcert()
         {
-            IList<Item> Items = [
+            IList<Item> items = [
                 new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 0, Quality = 10 }];
-            GildedRose app = new(Items);
-            app.UpdateQuality();
-            Assert.Equal(0, Items[0].Quality);
-        }
+            var rules = new Dictionary<string, IItemProcessingRules>();
 
-        [Fact]
-        public void Item_Quality_ShouldNeverIncreaseOverFifty()
-        {
-            IList<Item> Items = [
-                new Item { Name = "Aged Brie", SellIn = 10, Quality = 50 },
-                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 50 }
-            ];
-            GildedRose app = new(Items);
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
             app.UpdateQuality();
-            Assert.Equal(50, Items[0].Quality);
-            Assert.Equal(50, Items[1].Quality);
+            Assert.Equal(0, items[0].Quality);
         }
     }
 }
