@@ -19,7 +19,6 @@ namespace GildedRoseKata
                 UpdateItemQuality(item);
 
                 item.SellIn--;
-
                 if (item.SellIn < 0)
                 {
                     HandleItemPastSellIn(item);
@@ -31,29 +30,12 @@ namespace GildedRoseKata
         {
             if (item.QualityIncreasesWithAge())
             {
-                HandleItemsThatIncreaseQualityWithAge(item);
+                item.IncrementQualityIfNotAtMax();
+                item.ApplySellInDependentQualityUpdate();
                 return;
             }
 
             item.DecrementQualityIfNotAtMin();
-        }
-
-        private static void HandleItemsThatIncreaseQualityWithAge(Item item)
-        {
-            item.IncrementQualityIfNotAtMax();
-
-            if (item.HasSellInDependentQualityUpdates())
-            {
-                if (item.SellIn < 11) //magic number
-                {
-                    item.IncrementQualityIfNotAtMax();
-                }
-
-                if (item.SellIn < 6) //magic number
-                {
-                    item.IncrementQualityIfNotAtMax();
-                }
-            }
         }
 
         private static void HandleItemPastSellIn(Item item)

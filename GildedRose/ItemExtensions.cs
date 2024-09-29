@@ -1,9 +1,13 @@
-﻿namespace GildedRoseKata
+﻿using System;
+using System.Linq;
+
+namespace GildedRoseKata
 {
     public static class ItemExtensions
     {
         private const int MaxQuality = 50;
         private const int MinQuality = 0;
+        private static readonly int[] ItemSellInThresholds = [10, 5];
 
         public static void DecrementQualityIfNotAtMin(this Item item)
         {
@@ -26,11 +30,6 @@
             item.Quality = MinQuality;
         }
 
-        public static bool IsLessThanMaxQuality(this Item item)
-        {
-            return item.Quality < MaxQuality;
-        }
-
         public static bool QualityIncreasesWithAge(this Item item)
         {
             return (item.Name == ItemNames.AgedBrie || item.Name == ItemNames.BackstagePass);
@@ -46,9 +45,14 @@
             return item.Name == ItemNames.BackstagePass;
         }
 
-        public static bool HasSellInDependentQualityUpdates(this Item item)
+        public static void ApplySellInDependentQualityUpdate(this Item item)
         {
-            return item.Name == ItemNames.BackstagePass;
+            if (item.Name == ItemNames.BackstagePass)
+            {
+                int qualityUpdate = ItemSellInThresholds.Where(t => item.SellIn <= t)
+                    .Count();
+                item.Quality = Math.Clamp(item.Quality + qualityUpdate, MinQuality, MaxQuality);
+            }
         }
     }
 }
