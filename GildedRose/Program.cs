@@ -43,17 +43,23 @@ namespace GildedRoseKata
 
             var app = new GildedRose(Items);
 
-            for (var i = 0; i <= numOfDays; i++)
+            DisplayItemState(Items, 0); //display initial item state
+            for (var i = 1; i <= numOfDays; i++)
             {
-                Console.WriteLine("-------- day " + i + " --------");
-                Console.WriteLine("name, sellIn, quality");
-                foreach (Item item in Items)
-                {
-                    System.Console.WriteLine(item.Name + ", " + item.SellIn + ", " + item.Quality);
-                }
-                Console.WriteLine("");
-                app.UpdateQuality(); //on the last run of this loop, this update is pointless
+                app.UpdateQuality();
+                DisplayItemState(Items, i);
             }
+        }
+
+        private static void DisplayItemState(IList<Item> items, int day)
+        {
+            Console.WriteLine("-------- day " + day + " --------");
+            Console.WriteLine("name, sellIn, quality");
+            foreach (Item item in items)
+            {
+                System.Console.WriteLine(item.Name + ", " + item.SellIn + ", " + item.Quality);
+            }
+            Console.WriteLine("");
         }
     }
 }
