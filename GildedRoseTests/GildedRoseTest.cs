@@ -98,14 +98,17 @@ namespace GildedRoseTests
         }
 
         [Fact]
-        public void ItemIsBackstagePass_Quality_ShouldIncreaseByTwoSixToTenDaysFromConcert()
+        public void UpdateQuality_ItemHasExtraDailyAmountAdjustmentRules()
         {
             IList<Item> items = [
                 new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 10 },
                 new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 6, Quality = 10 }];
             var rules = new Dictionary<string, IItemProcessingRules>
             {
-                {"Backstage passes to a TAFKAL80ETC concert", new ItemProcessingRule(1)}
+                {"Backstage passes to a TAFKAL80ETC concert", new ItemProcessingRule(1, sellInQualityAdjustmentRules: [
+                    new SellInQualityAdjustmentRule(10, 1),
+                    new SellInQualityAdjustmentRule(5, 1)
+                    ])}
             };
 
             GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
@@ -123,7 +126,10 @@ namespace GildedRoseTests
                 new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 2, Quality = 10 }];
             var rules = new Dictionary<string, IItemProcessingRules>
             {
-                {"Backstage passes to a TAFKAL80ETC concert", new ItemProcessingRule(1)}
+                {"Backstage passes to a TAFKAL80ETC concert", new ItemProcessingRule(1, sellInQualityAdjustmentRules: [
+                    new SellInQualityAdjustmentRule(10, 1),
+                    new SellInQualityAdjustmentRule(5, 1)
+                    ])}
             };
 
             GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));

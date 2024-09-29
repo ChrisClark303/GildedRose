@@ -37,7 +37,7 @@ namespace GildedRoseKata
 
             if (item.QualityIncreasesWithAge())
             {
-                item.ApplySellInDependentQualityUpdate();
+                item.AmendQualityByAmount(rules.GetExtraQualityAdjustmentBySellIn(item.SellIn));
                 return;
             }
         }

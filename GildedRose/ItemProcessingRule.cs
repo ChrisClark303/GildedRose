@@ -22,7 +22,7 @@ namespace GildedRoseKata
         public int DailyQualityAdjustment { get; }
         public int GetExtraQualityAdjustmentBySellIn(int sellIn)
         {
-            return _sellInQualityAdjustmentRules.Where(r => sellIn < r.SellInThreshold)
+            return _sellInQualityAdjustmentRules.Where(r => sellIn <= r.SellInThreshold)
                 .Sum(r => r.QualityAdjustment);
         }
     }
