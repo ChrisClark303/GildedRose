@@ -43,10 +43,15 @@ namespace GildedRoseTests
         }
 
         [Fact]
-        public void ItemIsSulfuras_Quality_ShouldNotChangeOverTime()
+        public void UpdateQuality_ItemDoesNotRequireUpdate_QualityShouldNotChangeOverTime()
         {
-            IList<Item> Items = [new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 }];
-            GildedRose app = new(Items);
+            var rules = new Dictionary<string, IItemProcessingRules>
+            {
+                {"Sulfuras", new NoUpdateRule()}
+            };
+
+            IList<Item> Items = [new Item { Name = "Sulfuras", SellIn = 0, Quality = 80 }];
+            GildedRose app = new(Items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
             app.UpdateQuality();
             Assert.Equal(80, Items[0].Quality);
         }

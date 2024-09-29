@@ -13,10 +13,15 @@ namespace GildedRoseKata
 
             Console.WriteLine("OMGHAI!");
 
+            IDictionary<string,IItemProcessingRules> itemRules = GetItemRules();
+            ItemProcessingRule defaultRules = new ItemProcessingRule(-1);
+
+            var provider = new ItemProcessingRuleProvider(itemRules, defaultRules);
+
             IList<Item> items = GetItemsInStock();
             DisplayItemState(items, 0); //display initial item state
             
-            var app = new GildedRose(items);
+            var app = new GildedRose(items, provider);
             for (var i = 1; i <= numOfDays; i++)
             {
                 app.UpdateQuality();
@@ -37,6 +42,14 @@ namespace GildedRoseKata
                 new() {Name = ItemNames.BackstagePass, SellIn = 5, Quality = 49},
 				// this conjured item does not work properly yet
 				new() {Name = ItemNames.ConjuredManaCake, SellIn = 3, Quality = 6}
+            };
+        }
+
+        private static IDictionary<string, IItemProcessingRules> GetItemRules()
+        {
+            return new Dictionary<string, IItemProcessingRules>
+            {
+                {ItemNames.Sulfuras, new NoUpdateRule()}
             };
         }
 

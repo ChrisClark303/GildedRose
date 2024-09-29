@@ -5,16 +5,21 @@ namespace GildedRoseKata
     public class GildedRose
     {
         IList<Item> Items; //no accessor, name not correct for a field.
-        public GildedRose(IList<Item> Items)
+        
+        private readonly ItemProcessingRuleProvider _rulesProvider;
+
+        public GildedRose(IList<Item> Items, ItemProcessingRuleProvider rulesProvider = null)
         {
             this.Items = Items;
+            _rulesProvider = rulesProvider;
         }
 
         public void UpdateQuality()
         {
             foreach (Item item in Items)
             {
-                if (!item.RequiresQualityUpdates()) continue;
+                var itemRule = _rulesProvider?.GetRuleForItem(item);
+                if (itemRule != null && !itemRule.RequiresQualityUpdate) continue;
 
                 UpdateItemQuality(item);
 
@@ -33,7 +38,7 @@ namespace GildedRoseKata
                 item.IncrementQualityIfNotAtMax();
                 item.ApplySellInDependentQualityUpdate();
                 return;
-            }
+            } 
 
             item.DegradeQualityUntilMin();
         }
