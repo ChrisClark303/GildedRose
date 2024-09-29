@@ -9,15 +9,6 @@ namespace GildedRoseKata
         private const int MinQuality = 0;
         private static readonly int[] ItemSellInThresholds = [10, 5];
 
-        public static void DegradeQualityUntilMin(this Item item)
-        {
-            int qualityDegradation = item.Name == ItemNames.ConjuredManaCake
-                 ? 2
-                 : 1;
-
-            item.Quality = Math.Max(item.Quality - qualityDegradation, 0);
-        }
-
         public static void IncrementQualityIfNotAtMax(this Item item)
         {
             if (item.Quality < MaxQuality)

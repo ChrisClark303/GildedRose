@@ -26,7 +26,7 @@ namespace GildedRoseKata
                 item.SellIn--;
                 if (item.SellIn < 0)
                 {
-                    HandleItemPastSellIn(item);
+                    HandleItemPastSellIn(item, itemRule);
                 }
             }
         }
@@ -43,7 +43,7 @@ namespace GildedRoseKata
             item.AmendQualityByAmount(rules.DailyQualityAdjustment);
         }
 
-        private static void HandleItemPastSellIn(Item item)
+        private static void HandleItemPastSellIn(Item item, IItemProcessingRules rules)
         {
             if (item.ExpiresAfterSellIn())
             {
@@ -57,7 +57,7 @@ namespace GildedRoseKata
                 return;
             }
 
-            item.DegradeQualityUntilMin();
+            item.AmendQualityByAmount(rules.DailyQualityAdjustment);
         }
     }
 }

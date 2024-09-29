@@ -8,7 +8,7 @@ namespace GildedRoseTests
     public class GildedRoseTest
     {
         [Fact]
-        public void UpdateQuality_StandardItem_Quality_ShouldDegradeOverTime()
+        public void UpdateQuality_StandardItem_QualityShouldDegradeOverTime()
         {
             IList<Item> items = [new Item { Name = "Elixir of the Mongoose", SellIn = 10, Quality = 10 }];
             var rules = new Dictionary<string, IItemProcessingRules>();
@@ -20,7 +20,7 @@ namespace GildedRoseTests
         }
 
         [Fact]
-        public void Item_Quality_ShouldDegradeByTwoAfterSellInReachesZero()
+        public void UpdateQuality_StandardItem_ShouldDegradeByTwoAfterSellInReachesZero()
         {
             IList<Item> items = [new Item { Name = "Elixir of the Mongoose", SellIn = 0, Quality = 10 }];
             var rules = new Dictionary<string, IItemProcessingRules>();

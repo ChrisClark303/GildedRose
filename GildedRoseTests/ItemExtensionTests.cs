@@ -7,46 +7,6 @@ namespace GildedRoseTests
     public class ItemExtensionTests
     {
         [Fact]
-        public void DecrementQualityIfNotAtMin_ItemQualityMoreThanMin_AndStandardItem_ReducesQualityByOne()
-        {
-            Item item = new() { Quality = 10, Name = "Elixir of Mongoose" };
-
-            item.DegradeQualityUntilMin();
-
-            Assert.Equal(9, item.Quality);
-        }
-
-        [Fact]
-        public void DecrementQualityIfNotAtMin_ItemQualityMoreThanMin_AndConjuredItem_ReducesQualityByOne()
-        {
-            Item item = new() { Quality = 10, Name = "Conjured Mana Cake" };
-
-            item.DegradeQualityUntilMin();
-
-            Assert.Equal(8, item.Quality);
-        }
-
-        [Fact]
-        public void DecrementQualityIfNotAtMin_StandardItem_ItemQualityAtMin_DoesNotReduceQuality()
-        {
-            Item item = new() { Quality = 0 };
-
-            item.DegradeQualityUntilMin();
-
-            Assert.Equal(0, item.Quality);
-        }
-
-        [Fact]
-        public void DecrementQualityIfNotAtMin_ConjuredItem_ItemQualityAtMin_DoesNotReduceQualityPastZero()
-        {
-            Item item = new() { Quality = 1, Name = "Conjured Mana Cake" };
-
-            item.DegradeQualityUntilMin();
-
-            Assert.Equal(0, item.Quality);
-        }
-
-        [Fact]
         public void IncrementQualityIfNotAtMax_ItemQualityLessThanMax_IncreasesQualityByOne()
         {
             Item item = new() { Quality = 10 };
