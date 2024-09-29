@@ -8,7 +8,7 @@ namespace GildedRoseKata
         
         private readonly ItemProcessingRuleProvider _rulesProvider;
 
-        public GildedRose(IList<Item> Items, ItemProcessingRuleProvider rulesProvider = null)
+        public GildedRose(IList<Item> Items, ItemProcessingRuleProvider rulesProvider)
         {
             this.Items = Items;
             _rulesProvider = rulesProvider;
@@ -18,8 +18,8 @@ namespace GildedRoseKata
         {
             foreach (Item item in Items)
             {
-                var itemRule = _rulesProvider?.GetRuleForItem(item);
-                if (itemRule != null && !itemRule.RequiresQualityUpdate) continue;
+                var itemRule = _rulesProvider.GetRuleForItem(item);
+                if (!itemRule.RequiresQualityUpdate) continue;
 
                 UpdateItemQuality(item, itemRule);
 

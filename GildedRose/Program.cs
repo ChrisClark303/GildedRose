@@ -15,7 +15,6 @@ namespace GildedRoseKata
 
             IDictionary<string,IItemProcessingRules> itemRules = GetItemRules();
             ItemProcessingRule defaultRules = new ItemProcessingRule(-1);
-
             var provider = new ItemProcessingRuleProvider(itemRules, defaultRules);
 
             IList<Item> items = GetItemsInStock();
