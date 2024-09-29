@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GildedRoseKata
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -13,42 +13,31 @@ namespace GildedRoseKata
 
             Console.WriteLine("OMGHAI!");
 
-            IList<Item> Items = new List<Item>{
-                new Item {Name = ItemNames.DexterityVest, SellIn = 10, Quality = 20},
-                new Item {Name = ItemNames.AgedBrie, SellIn = 2, Quality = 0},
-                new Item {Name = ItemNames.MongooseElixir, SellIn = 5, Quality = 7},
-                new Item {Name = ItemNames.Sulfuras, SellIn = 0, Quality = 80},
-                new Item {Name = ItemNames.Sulfuras, SellIn = -1, Quality = 80},
-                new Item
-                {
-                    Name = ItemNames.BackstagePass,
-                    SellIn = 15,
-                    Quality = 20
-                },
-                new Item
-                {
-                    Name = ItemNames.BackstagePass,
-                    SellIn = 10,
-                    Quality = 49
-                },
-                new Item
-                {
-                    Name = ItemNames.BackstagePass,
-                    SellIn = 5,
-                    Quality = 49
-                },
-				// this conjured item does not work properly yet
-				new Item {Name = ItemNames.ConjuredManaCake, SellIn = 3, Quality = 6}
-            };
-
-            var app = new GildedRose(Items);
-
-            DisplayItemState(Items, 0); //display initial item state
+            IList<Item> items = GetItemsInStock();
+            DisplayItemState(items, 0); //display initial item state
+            
+            var app = new GildedRose(items);
             for (var i = 1; i <= numOfDays; i++)
             {
                 app.UpdateQuality();
-                DisplayItemState(Items, i);
+                DisplayItemState(items, i);
             }
+        }
+
+        private static IList<Item> GetItemsInStock()
+        {
+            return new List<Item>{
+                new() {Name = ItemNames.DexterityVest, SellIn = 10, Quality = 20},
+                new() {Name = ItemNames.AgedBrie, SellIn = 2, Quality = 0},
+                new() {Name = ItemNames.MongooseElixir, SellIn = 5, Quality = 7},
+                new() {Name = ItemNames.Sulfuras, SellIn = 0, Quality = 80},
+                new() {Name = ItemNames.Sulfuras, SellIn = -1, Quality = 80},
+                new() {Name = ItemNames.BackstagePass, SellIn = 15, Quality = 20},
+                new() {Name = ItemNames.BackstagePass, SellIn = 10, Quality = 49},
+                new() {Name = ItemNames.BackstagePass, SellIn = 5, Quality = 49},
+				// this conjured item does not work properly yet
+				new() {Name = ItemNames.ConjuredManaCake, SellIn = 3, Quality = 6}
+            };
         }
 
         private static void DisplayItemState(IList<Item> items, int day)
