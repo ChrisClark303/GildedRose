@@ -13,7 +13,7 @@ namespace GildedRoseTests
             IList<Item> items = [new Item { Name = "Elixir of the Mongoose", SellIn = 10, Quality = 10 }];
             var rules = new Dictionary<string, IItemProcessingRules>();
 
-            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRules(-1)));
             app.UpdateQuality();
 
             Assert.Equal(9, items[0].Quality);
@@ -25,7 +25,7 @@ namespace GildedRoseTests
             IList<Item> items = [new Item { Name = "Elixir of the Mongoose", SellIn = 0, Quality = 10 }];
             var rules = new Dictionary<string, IItemProcessingRules>();
 
-            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRules(-1)));
             app.UpdateQuality();
 
             Assert.Equal(8, items[0].Quality);
@@ -37,7 +37,7 @@ namespace GildedRoseTests
             IList<Item> items = [new Item { Name = "Elixir of the Mongoose", SellIn = 10, Quality = 0 }];
             var rules = new Dictionary<string, IItemProcessingRules>();
 
-            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRules(-1)));
             app.UpdateQuality();
             Assert.Equal(0, items[0].Quality);
         }
@@ -48,7 +48,7 @@ namespace GildedRoseTests
             IList<Item> items = [new Item { Name = "Elixir of the Mongoose", SellIn = 10, Quality = 10 }];
             var rules = new Dictionary<string, IItemProcessingRules>();
 
-            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRules(-1)));
             app.UpdateQuality();
             Assert.Equal(9, items[0].SellIn);
         }
@@ -63,7 +63,7 @@ namespace GildedRoseTests
                 {"Sulfuras", new NoUpdateRule()}
             };
   
-            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRules(-1)));
             app.UpdateQuality();
             Assert.Equal(80, items[0].Quality);
         }
@@ -75,10 +75,10 @@ namespace GildedRoseTests
 
             var rules = new Dictionary<string, IItemProcessingRules>
             {
-                {"Aged Brie", new ItemProcessingRule(1)}
+                {"Aged Brie", new ItemProcessingRules(1)}
             };
 
-            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRules(-1)));
             app.UpdateQuality();
             Assert.Equal(11, items[0].Quality);
         }
@@ -89,10 +89,10 @@ namespace GildedRoseTests
             IList<Item> items = [new Item { Name = "Aged Brie", SellIn = 10, Quality = 50 }];
             var rules = new Dictionary<string, IItemProcessingRules>
             {
-                {"Aged Brie", new ItemProcessingRule(1)}
+                {"Aged Brie", new ItemProcessingRules(1)}
             };
 
-            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRules(-1)));
             app.UpdateQuality();
             Assert.Equal(50, items[0].Quality);
         }
@@ -105,13 +105,13 @@ namespace GildedRoseTests
                 new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 6, Quality = 10 }];
             var rules = new Dictionary<string, IItemProcessingRules>
             {
-                {"Backstage passes to a TAFKAL80ETC concert", new ItemProcessingRule(1, sellInQualityAdjustmentRules: [
+                {"Backstage passes to a TAFKAL80ETC concert", new ItemProcessingRules(1, sellInQualityAdjustmentRules: [
                     new SellInQualityAdjustmentRule(10, 1),
                     new SellInQualityAdjustmentRule(5, 1)
                     ])}
             };
 
-            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRules(-1)));
             app.UpdateQuality();
 
             Assert.Equal(12, items[0].Quality);
@@ -126,13 +126,13 @@ namespace GildedRoseTests
                 new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 2, Quality = 10 }];
             var rules = new Dictionary<string, IItemProcessingRules>
             {
-                {"Backstage passes to a TAFKAL80ETC concert", new ItemProcessingRule(1, sellInQualityAdjustmentRules: [
+                {"Backstage passes to a TAFKAL80ETC concert", new ItemProcessingRules(1, sellInQualityAdjustmentRules: [
                     new SellInQualityAdjustmentRule(10, 1),
                     new SellInQualityAdjustmentRule(5, 1)
                     ])}
             };
 
-            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRules(-1)));
             app.UpdateQuality();
             Assert.Equal(13, items[0].Quality);
             Assert.Equal(13, items[1].Quality);
@@ -145,10 +145,10 @@ namespace GildedRoseTests
                 new Item { Name = "Backstage pass", SellIn = 0, Quality = 10 }];
             var rules = new Dictionary<string, IItemProcessingRules>
             {
-                {"Backstage pass", new ItemProcessingRule(1, expiresAfterSellIn:true)}
+                {"Backstage pass", new ItemProcessingRules(1, expiresAfterSellIn:true)}
             };
 
-            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRules(-1)));
             app.UpdateQuality();
             Assert.Equal(0, items[0].Quality);
         }
