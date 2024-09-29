@@ -45,14 +45,9 @@ namespace GildedRoseKata
             return item.Name == ItemNames.BackstagePass;
         }
 
-        public static bool HasSellInDependentQualityUpdates(this Item item)
-        {
-            return item.Name == ItemNames.BackstagePass;
-        }
-
         public static void ApplySellInDependentQualityUpdate(this Item item)
         {
-            if (item.HasSellInDependentQualityUpdates())
+            if (item.Name == ItemNames.BackstagePass)
             {
                 int qualityUpdate = ItemSellInThresholds.Where(t => item.SellIn <= t)
                     .Count();

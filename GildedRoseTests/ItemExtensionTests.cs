@@ -102,21 +102,6 @@ namespace GildedRoseTests
         }
 
         [Theory]
-        [InlineData("Aged Brie", false)]
-        [InlineData("Backstage passes to a TAFKAL80ETC concert", true)]
-        [InlineData("+5 Dexterity Vest", false)]
-        [InlineData("ItemX", false)]
-        [InlineData("Sulfuras, Hand of Ragnaros", false)]
-        public void HasSellInDependentQualityUpdates_ReturnsCorrectBoolean_BasedOnItemName(string itemName, bool expected)
-        {
-            Item item = new() { Name = itemName };
-
-            bool actual = item.HasSellInDependentQualityUpdates();
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Theory]
         [InlineData("Aged Brie", 5, 0)]
         [InlineData("Backstage passes to a TAFKAL80ETC concert", 11, 0)]
         [InlineData("Backstage passes to a TAFKAL80ETC concert", 10, 1)]
