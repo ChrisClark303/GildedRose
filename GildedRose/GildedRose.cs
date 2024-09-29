@@ -35,7 +35,7 @@ namespace GildedRoseKata
                 return;
             }
 
-            item.DecrementQualityIfNotAtMin();
+            item.DegradeQualityUntilMin();
         }
 
         private static void HandleItemPastSellIn(Item item)
@@ -52,7 +52,7 @@ namespace GildedRoseKata
                 return;
             }
 
-            item.DecrementQualityIfNotAtMin();
+            item.DegradeQualityUntilMin();
         }
     }
 }
