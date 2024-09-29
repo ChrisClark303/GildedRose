@@ -33,14 +33,13 @@ namespace GildedRoseKata
 
         private static void UpdateItemQuality(Item item, IItemProcessingRules rules)
         {
+            item.AmendQualityByAmount(rules.DailyQualityAdjustment);
+
             if (item.QualityIncreasesWithAge())
             {
-                item.AmendQualityByAmount(rules.DailyQualityAdjustment);
                 item.ApplySellInDependentQualityUpdate();
                 return;
             }
-
-            item.AmendQualityByAmount(rules.DailyQualityAdjustment);
         }
 
         private static void HandleItemPastSellIn(Item item, IItemProcessingRules rules)
