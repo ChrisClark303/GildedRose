@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace GildedRoseKata
 {
-    public class ItemQualityProcessingRule : IItemQualityProcessingRule
+    public class ItemProcessingRule : IItemProcessingRules
     {
         private readonly SellInQualityAdjustmentRule[] _sellInQualityAdjustmentRules = [];
 
-        public ItemQualityProcessingRule(int dailyQualityAdjustment, bool expiresAfterSellIn, params SellInQualityAdjustmentRule[] sellInQualityAdjustmentRules)
+        public ItemProcessingRule(int dailyQualityAdjustment, bool expiresAfterSellIn, params SellInQualityAdjustmentRule[] sellInQualityAdjustmentRules)
         {
             DailyQualityAdjustment = dailyQualityAdjustment;
             ExpiresAfterSellIn = expiresAfterSellIn;

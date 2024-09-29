@@ -1,6 +1,6 @@
 ﻿namespace GildedRoseKata
 {
-    public class NoUpdateRule : IItemQualityProcessingRule
+    public class NoUpdateRule : IItemProcessingRules
     {
         public int DailyQualityAdjustment => 0;
 

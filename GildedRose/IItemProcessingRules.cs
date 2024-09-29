@@ -1,6 +1,6 @@
 ﻿namespace GildedRoseKata
 {
-    public interface IItemQualityProcessingRule
+    public interface IItemProcessingRules
     {
         int DailyQualityAdjustment { get; }
         bool ExpiresAfterSellIn { get; }

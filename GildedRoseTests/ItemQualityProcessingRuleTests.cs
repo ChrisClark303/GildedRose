@@ -6,23 +6,23 @@ namespace GildedRoseTests
     public class ItemQualityProcessingRuleTests
     {
         [Fact]
-        public void NoUpdate_ReturnsRule_WithRequiresQualityUpdate_SetToFalse()
+        public void NoUpdateRule_RequiresQualityUpdate_SetToFalse()
         {
-            var rule = ItemQualityProcessingRule.NoUpdate;
+            var rule = new NoUpdateRule();
             Assert.False(rule.RequiresQualityUpdate);
         }
 
         [Fact]
-        public void ItemQualityProcessingRule_RequiresQualityUpdate_DefaultsToTrue()
+        public void ItemQualityProcessingRule_RequiresQualityUpdate_SetToTrue()
         {
-            var rule = new ItemQualityProcessingRule(-1, false);
+            var rule = new ItemProcessingRule(-1, false);
             Assert.True(rule.RequiresQualityUpdate);
         }
 
         [Fact]
         public void GetExtraQualityAdjustmentBySellIn_SingleSellInThreshold_ItemInsideThreshold_ReturnsCorrectQualityAdjustment()
         {
-            var rule = new ItemQualityProcessingRule(-1, false, new SellInQualityAdjustmentRule() { SellInThreshold = 10, QualityAdjustment = 2 });
+            var rule = new ItemProcessingRule(-1, false, new SellInQualityAdjustmentRule() { SellInThreshold = 10, QualityAdjustment = 2 });
             int extraQualityAdjustment = rule.GetExtraQualityAdjustmentBySellIn(5);
 
             Assert.Equal(2, extraQualityAdjustment);
@@ -32,7 +32,7 @@ namespace GildedRoseTests
         [Fact]
         public void GetExtraQualityAdjustmentBySellIn_SingleSellInThreshold_ItemOutsideThreshold_ReturnsCorrectQualityAdjustment()
         {
-            var rule = new ItemQualityProcessingRule(-1, false, new SellInQualityAdjustmentRule() { SellInThreshold = 10, QualityAdjustment = 2 });
+            var rule = new ItemProcessingRule(-1, false, new SellInQualityAdjustmentRule() { SellInThreshold = 10, QualityAdjustment = 2 });
             int extraQualityAdjustment = rule.GetExtraQualityAdjustmentBySellIn(11);
 
             Assert.Equal(0, extraQualityAdjustment);
@@ -41,7 +41,7 @@ namespace GildedRoseTests
         [Fact]
         public void GetExtraQualityAdjustmentBySellIn_DoubleSellInThreshold_ItemInsideInnerThreshold_ReturnsSumQualityAdjustment()
         {
-            var rule = new ItemQualityProcessingRule(-1, false,
+            var rule = new ItemProcessingRule(-1, false,
                 new SellInQualityAdjustmentRule() { SellInThreshold = 10, QualityAdjustment = 1 },
                 new SellInQualityAdjustmentRule() { SellInThreshold = 5, QualityAdjustment = 1 });
             int extraQualityAdjustment = rule.GetExtraQualityAdjustmentBySellIn(4);
