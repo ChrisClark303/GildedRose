@@ -52,7 +52,9 @@ namespace GildedRoseKata
                 {ItemNames.Sulfuras, new NoUpdateRule()},
                 {ItemNames.ConjuredManaCake, new ItemProcessingRule(-2) },
                 {ItemNames.AgedBrie, new ItemProcessingRule(1) },
-                {ItemNames.BackstagePass, new ItemProcessingRule(1, sellInQualityAdjustmentRules: [
+                {ItemNames.BackstagePass, new ItemProcessingRule(1,
+                expiresAfterSellIn: true,
+                sellInQualityAdjustmentRules: [
                     new SellInQualityAdjustmentRule(10, 1),
                     new SellInQualityAdjustmentRule(5, 1)
                     ]) }

@@ -34,17 +34,12 @@ namespace GildedRoseKata
         private static void UpdateItemQuality(Item item, IItemProcessingRules rules)
         {
             item.AmendQualityByAmount(rules.DailyQualityAdjustment);
-
-            if (item.QualityIncreasesWithAge())
-            {
-                item.AmendQualityByAmount(rules.GetExtraQualityAdjustmentBySellIn(item.SellIn));
-                return;
-            }
+            item.AmendQualityByAmount(rules.GetExtraQualityAdjustmentBySellIn(item.SellIn));
         }
 
         private static void HandleItemPastSellIn(Item item, IItemProcessingRules rules)
         {
-            if (item.ExpiresAfterSellIn())
+            if (rules.ExpiresAfterSellIn)
             {
                 item.SetQualityToMinimum();
                 return;

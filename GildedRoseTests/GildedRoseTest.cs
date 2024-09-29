@@ -142,8 +142,11 @@ namespace GildedRoseTests
         public void ItemIsBackstagePass_Quality_ShouldReduceToZeroAfterConcert()
         {
             IList<Item> items = [
-                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 0, Quality = 10 }];
-            var rules = new Dictionary<string, IItemProcessingRules>();
+                new Item { Name = "Backstage pass", SellIn = 0, Quality = 10 }];
+            var rules = new Dictionary<string, IItemProcessingRules>
+            {
+                {"Backstage pass", new ItemProcessingRule(1, expiresAfterSellIn:true)}
+            };
 
             GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
             app.UpdateQuality();
