@@ -26,6 +26,12 @@ namespace GildedRoseKata
             }
         }
 
+        public static void AmendQualityByAmount(this Item item, int amount)
+        {
+            int newQualityAmount = item.Quality + amount;
+            item.Quality = Math.Clamp(newQualityAmount, MinQuality, MaxQuality);
+        }
+
         public static void SetQualityToMinimum(this Item item)
         {
             item.Quality = MinQuality;

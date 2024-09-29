@@ -1,17 +1,21 @@
 ﻿using Xunit;
 using System.Collections.Generic;
 using GildedRoseKata;
+using Xunit.Abstractions;
 
 namespace GildedRoseTests
 {
     public class GildedRoseTest
     {
         [Fact]
-        public void Item_Quality_ShouldDegradeOverTime()
+        public void UpdateQuality_StandardItem_Quality_ShouldDegradeOverTime()
         {
             IList<Item> items = [new Item { Name = "Elixir of the Mongoose", SellIn = 10, Quality = 10 }];
-            GildedRose app = new(items);
+            var rules = new Dictionary<string, IItemProcessingRules>();
+
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
             app.UpdateQuality();
+
             Assert.Equal(9, items[0].Quality);
         }
 
@@ -19,38 +23,46 @@ namespace GildedRoseTests
         public void Item_Quality_ShouldDegradeByTwoAfterSellInReachesZero()
         {
             IList<Item> items = [new Item { Name = "Elixir of the Mongoose", SellIn = 0, Quality = 10 }];
-            GildedRose app = new(items);
+            var rules = new Dictionary<string, IItemProcessingRules>();
+
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
             app.UpdateQuality();
+
             Assert.Equal(8, items[0].Quality);
         }
 
         [Fact]
         public void Item_Quality_ShouldNeverDecreaseBelowZero()
         {
-            IList<Item> Items = [new Item { Name = "Elixir of the Mongoose", SellIn = 10, Quality = 0 }];
-            GildedRose app = new(Items);
+            IList<Item> items = [new Item { Name = "Elixir of the Mongoose", SellIn = 10, Quality = 0 }];
+            var rules = new Dictionary<string, IItemProcessingRules>();
+
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
             app.UpdateQuality();
-            Assert.Equal(0, Items[0].Quality);
+            Assert.Equal(0, items[0].Quality);
         }
 
         [Fact]
         public void Item_SellIn_ShouldDecreaseOverTime()
         {
-            IList<Item> Items = [new Item { Name = "Elixir of the Mongoose", SellIn = 10, Quality = 10 }];
-            GildedRose app = new(Items);
+            IList<Item> items = [new Item { Name = "Elixir of the Mongoose", SellIn = 10, Quality = 10 }];
+            var rules = new Dictionary<string, IItemProcessingRules>();
+
+            GildedRose app = new(items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
             app.UpdateQuality();
-            Assert.Equal(9, Items[0].SellIn);
+            Assert.Equal(9, items[0].SellIn);
         }
 
         [Fact]
         public void UpdateQuality_ItemDoesNotRequireUpdate_QualityShouldNotChangeOverTime()
         {
+            IList<Item> Items = [new Item { Name = "Sulfuras", SellIn = 0, Quality = 80 }];
+
             var rules = new Dictionary<string, IItemProcessingRules>
             {
                 {"Sulfuras", new NoUpdateRule()}
             };
-
-            IList<Item> Items = [new Item { Name = "Sulfuras", SellIn = 0, Quality = 80 }];
+  
             GildedRose app = new(Items, new ItemProcessingRuleProvider(rules, new ItemProcessingRule(-1)));
             app.UpdateQuality();
             Assert.Equal(80, Items[0].Quality);

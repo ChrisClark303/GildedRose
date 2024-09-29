@@ -21,7 +21,7 @@ namespace GildedRoseKata
                 var itemRule = _rulesProvider?.GetRuleForItem(item);
                 if (itemRule != null && !itemRule.RequiresQualityUpdate) continue;
 
-                UpdateItemQuality(item);
+                UpdateItemQuality(item, itemRule);
 
                 item.SellIn--;
                 if (item.SellIn < 0)
@@ -31,7 +31,7 @@ namespace GildedRoseKata
             }
         }
 
-        private static void UpdateItemQuality(Item item)
+        private static void UpdateItemQuality(Item item, IItemProcessingRules rules)
         {
             if (item.QualityIncreasesWithAge())
             {
@@ -40,7 +40,7 @@ namespace GildedRoseKata
                 return;
             } 
 
-            item.DegradeQualityUntilMin();
+            item.AmendQualityByAmount(rules.DailyQualityAdjustment);
         }
 
         private static void HandleItemPastSellIn(Item item)
