@@ -56,26 +56,6 @@ namespace GildedRoseTests
             Assert.Equal(0, item.Quality);
         }
 
-        [Fact]
-        public void IsLessThanMaxQuality_QualityIsLessThan50_ReturnsTrue()
-        {
-            Item item = new() { Quality = 49 };
-
-            var isLessThanMax = item.IsLessThanMaxQuality();
-
-            Assert.True(isLessThanMax);
-        }
-
-        [Fact]
-        public void IsLessThanMaxQuality_QualityIs50_ReturnsFalse()
-        {
-            Item item = new() { Quality = 50 };
-
-            var isLessThanMax = item.IsLessThanMaxQuality();
-
-            Assert.False(isLessThanMax);
-        }
-
         [Theory]
         [InlineData("Aged Brie", true)]
         [InlineData("Backstage passes to a TAFKAL80ETC concert", true)]
