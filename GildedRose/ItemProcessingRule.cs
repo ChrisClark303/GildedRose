@@ -10,7 +10,7 @@ namespace GildedRoseKata
     {
         private readonly SellInQualityAdjustmentRule[] _sellInQualityAdjustmentRules = [];
 
-        public ItemProcessingRule(int dailyQualityAdjustment, bool expiresAfterSellIn, params SellInQualityAdjustmentRule[] sellInQualityAdjustmentRules)
+        public ItemProcessingRule(int dailyQualityAdjustment, bool expiresAfterSellIn = false, params SellInQualityAdjustmentRule[] sellInQualityAdjustmentRules)
         {
             DailyQualityAdjustment = dailyQualityAdjustment;
             ExpiresAfterSellIn = expiresAfterSellIn;
