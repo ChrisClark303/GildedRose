@@ -5,54 +5,47 @@ namespace GildedRoseKata
     public class GildedRose
     {
         IList<Item> Items; //no accessor, name not correct for a field.
-        public GildedRose(IList<Item> Items)
+        
+        private readonly ItemProcessingRuleProvider _rulesProvider;
+
+        public GildedRose(IList<Item> Items, ItemProcessingRuleProvider rulesProvider)
         {
             this.Items = Items;
+            _rulesProvider = rulesProvider;
         }
 
         public void UpdateQuality()
         {
             foreach (Item item in Items)
             {
-                if (!item.RequiresQualityUpdates()) continue;
+                var itemRule = _rulesProvider.GetRuleForItem(item);
+                if (!itemRule.RequiresQualityUpdate) continue;
 
-                UpdateItemQuality(item);
+                UpdateItemQuality(item, itemRule);
 
                 item.SellIn--;
                 if (item.SellIn < 0)
                 {
-                    HandleItemPastSellIn(item);
+                    HandleItemPastSellIn(item, itemRule);
                 }
             }
         }
 
-        private static void UpdateItemQuality(Item item)
+        private static void UpdateItemQuality(Item item, IItemProcessingRules rules)
         {
-            if (item.QualityIncreasesWithAge())
-            {
-                item.IncrementQualityIfNotAtMax();
-                item.ApplySellInDependentQualityUpdate();
-                return;
-            }
-
-            item.DegradeQualityUntilMin();
+            item.AmendQualityByAmount(rules.DailyQualityAdjustment);
+            item.AmendQualityByAmount(rules.GetExtraQualityAdjustmentBySellIn(item.SellIn));
         }
 
-        private static void HandleItemPastSellIn(Item item)
+        private static void HandleItemPastSellIn(Item item, IItemProcessingRules rules)
         {
-            if (item.ExpiresAfterSellIn())
+            if (rules.ExpiresAfterSellIn)
             {
                 item.SetQualityToMinimum();
                 return;
             }
 
-            if (item.QualityIncreasesWithAge())
-            {
-                item.IncrementQualityIfNotAtMax();
-                return;
-            }
-
-            item.DegradeQualityUntilMin();
+            item.AmendQualityByAmount(rules.DailyQualityAdjustment);
         }
     }
 }
